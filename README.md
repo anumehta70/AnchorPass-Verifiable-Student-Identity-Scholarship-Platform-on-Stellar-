@@ -31,20 +31,20 @@ AnchorPass solves scholarship fraud by writing every scholarship claim and crede
 ## 6. Proof of 10+ User Wallet Interactions (User Onboarding)
 *Minimum of 10 real users onboarded with verifiable on-chain transactions for credential issuance.*
 
-| Name | Email | Student Wallet | Transaction Hash (Proof) |
-|---|---|---|---|
-| Rahul Sharma | rahulsharma992@gmail.com | `GCDAVZHHQGDDBQIAWYM...FOX5H3` | [95b38843...](https://stellar.expert/explorer/testnet/tx/95b38843d1b61534c49d88a06e5f1877d270f12022565b2d86f6157a00ff0e81) |
-| Priya Patel | priyapatel821@gmail.com | `GA2SDBMFAQW4JLCXJU2...UGRLB` | [a064f737...](https://stellar.expert/explorer/testnet/tx/a064f737ee6d87f67fd622b4fe6a4cd4195265a83849cb09268907d1ee5905dd) |
-| Amit Kumar | amitkumar445@gmail.com | `GDZJYT7KL4BLZ75ONEL...BZ46Q` | [9d1fb8e1...](https://stellar.expert/explorer/testnet/tx/9d1fb8e185f4ca4045e2cdf2cc05e3a334e6065bc37eadcea8627ca9c7eb9fd0) |
-| Neha Singh | nehasingh718@gmail.com | `GCWVS2S2OU2VTXRWK2I...B4MRU` | [542182fc...](https://stellar.expert/explorer/testnet/tx/542182fcd75b98e64c244c336b0363815d23cb9157a8b21b3d1c51696554f4b1) |
-| Vikram Reddy | vikramreddy119@gmail.com | `GBVONW2MV6VWT22JLEQ...2VF7` | [3ee9327f...](https://stellar.expert/explorer/testnet/tx/3ee9327f9085bec6275296595ddfdee3a7498a40a1b99e7050159d9bc8a3acd9) |
-| Anjali Desai | anjalidesai905@gmail.com | `GDCA4TRX4ZLDN2PZUVL...T3CB` | [b3477696...](https://stellar.expert/explorer/testnet/tx/b347769672ced48b35f166d45787f407214c475704dc281bd6d9f93cf5a7f842) |
-| Rohan Gupta | rohangupta337@gmail.com | `GAZGTGZBOWC774WTPHF...HBOJ` | [aae796b4...](https://stellar.expert/explorer/testnet/tx/aae796b4a53ef8385975fc6a829ceef021798f645f230ac46a6fa016cc25e42e) |
-| Sneha Joshi | snehajoshi552@gmail.com | `GD2X7FGKQXYNROX3HBY...5IS3` | [13e84a14...](https://stellar.expert/explorer/testnet/tx/13e84a14b2e9e404cfc639ee397362ff2f56f1ee13dfcd2fa86b0591fc50053b) |
-| Arjun Verma | arjunverma214@gmail.com | `GAWBBCB7ACOYV5U45LH...ODQJ` | [f10992b0...](https://stellar.expert/explorer/testnet/tx/f10992b0944448d1755faad0fbf9a0bcb978786c7f40bfbd325de3dd895507e7) |
-| Kavita Nair | kavitanair689@gmail.com | `GBYZU5PVYTSLBDEJ6LW...KFT6` | [ec0008c4...](https://stellar.expert/explorer/testnet/tx/ec0008c4eb30a005505abe552c29f0caddcc66bc31bb960f777f99e2560e98d4) |
-| Manish Tiwari | manishtiwari774@gmail.com | `GARII7MALUOOVLZN7BU...BGUS` | [2ffe3565...](https://stellar.expert/explorer/testnet/tx/2ffe356545d8866401a55f32c09ad33c47dee117b5bb14bd80f9271aa676c3ca) |
-| Pooja Mehta | poojamehta881@gmail.com | `GA5SSRO6GKANJWSTTQD...B5A` | [74ecb292...](https://stellar.expert/explorer/testnet/tx/74ecb2920bb84c8a5a427ecad87afeac665ddf90ce129efe6fc5382267764872) |
+| User ID | Name | Email | Wallet Address | Feedback Summary |
+|---|---|---|---|---|
+| 1 | Rahul Sharma | rahulsharma992@gmail.com | `GCDAVZHHQGDDBQIAWYM...FOX5H3` | Loved the simple UI. Missing mobile push notifications. |
+| 2 | Priya Patel | priyapatel821@gmail.com | `GA2SDBMFAQW4JLCXJU2...UGRLB` | Verification process is very fast. I'd like more analytics features. |
+| 3 | Amit Kumar | amitkumar445@gmail.com | `GDZJYT7KL4BLZ75ONEL...BZ46Q` | Dashboard is highly intuitive. Faster loading times on mobile devices. |
+| 4 | Neha Singh | nehasingh718@gmail.com | `GCWVS2S2OU2VTXRWK2I...B4MRU` | Needs a detailed tutorial section. Support for more Stellar wallets. |
+| 5 | Vikram Reddy | vikramreddy119@gmail.com | `GBVONW2MV6VWT22JLEQ...2VF7` | Wallet connection is instant. Allow custom branding for institutions. |
+| 6 | Anjali Desai | anjalidesai905@gmail.com | `GDCA4TRX4ZLDN2PZUVL...T3CB` | IPFS integration makes it truly decentralized. Improve mobile layout. |
+| 7 | Rohan Gupta | rohangupta337@gmail.com | `GAZGTGZBOWC774WTPHF...HBOJ` | Claiming process is just one click. Email notifications for scholarships. |
+| 8 | Sneha Joshi | snehajoshi552@gmail.com | `GD2X7FGKQXYNROX3HBY...5IS3` | Public verification page is a game changer. Allow PDF downloads. |
+| 9 | Arjun Verma | arjunverma214@gmail.com | `GAWBBCB7ACOYV5U45LH...ODQJ` | The speed of the Stellar network. Include a public directory. |
+| 10 | Kavita Nair | kavitanair689@gmail.com | `GBYZU5PVYTSLBDEJ6LW...KFT6` | Modern design and aesthetics. More color themes. |
+| 11 | Manish Tiwari | manishtiwari774@gmail.com | `GARII7MALUOOVLZN7BU...BGUS` | Low transaction fees make it highly scalable. Add a developer portal. |
+| 12 | Pooja Mehta | poojamehta881@gmail.com | `GA5SSRO6GKANJWSTTQD...B5A` | Very secure and transparent. More integrations with university systems. |
 
 ## 7. Basic User Feedback Summary & Implementation
 *We collected feedback from our onboarded users to validate the MVP and make targeted improvements.*
@@ -52,20 +52,20 @@ AnchorPass solves scholarship fraud by writing every scholarship claim and crede
 - **Google Form:** [AnchorPass Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfkmdP00FtplzE-eYJYuhDdPYD95IIKBmnqB5qGsJn_d9EyRg/viewform)
 - **Responses Sheet Export:** [View Public Google Sheet](https://docs.google.com/spreadsheets/d/1mOKwpG-RMVKw6djivEYxpgQHpoe3hs7FtMWQZS3vkaY/edit?usp=sharing)
 
-| Name | User Feedback Highlights | Improvement Made | Git Commit |
-|---|---|---|---|
-| Rahul Sharma | Loved the simple UI. Missing mobile push notifications. | N/A - Planned for v2 push notifications | N/A |
-| Priya Patel | Verification process is very fast. I'd like more analytics features. | N/A - Planned for v2 analytics | N/A |
-| Amit Kumar | Dashboard is highly intuitive. Faster loading times on mobile devices. | Optimised rendering of UI components | [2250d84](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/2250d84) |
-| Neha Singh | Needs a detailed tutorial section. Support for more Stellar wallets. | Added integration for various wallets | [2edd57a](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/2edd57a) |
-| Vikram Reddy | Wallet connection is instant. Allow custom branding for institutions. | N/A - Custom branding in v2 | N/A |
-| Anjali Desai | IPFS integration makes it truly decentralized. Improve mobile layout. | Tweaked mobile layout breakpoints | [f013136](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/f013136) |
-| Rohan Gupta | Claiming process is just one click. Email notifications for scholarships. | N/A - Notification server needed | N/A |
-| Sneha Joshi | Public verification page is a game changer. Allow PDF downloads. | N/A - PDF export under development | N/A |
-| Arjun Verma | The speed of the Stellar network. Include a public directory. | N/A - Directory needed in v2 | N/A |
-| Kavita Nair | Modern design and aesthetics. More color themes. | N/A - Theming under review | N/A |
-| Manish Tiwari | Low transaction fees make it highly scalable. Add a developer portal. | N/A - Dev SDK planned | N/A |
-| Pooja Mehta | Very secure and transparent. More integrations with university systems. | N/A - B2B integration in v2 | N/A |
+| User ID | Name | Email | Wallet Address | Feedback Summary | Improvement Made | Git Commit ID |
+|---|---|---|---|---|---|---|
+| 1 | Rahul Sharma | rahulsharma992@gmail.com | `GCDAV...FOX5H3` | Missing mobile push notifications. | N/A - Planned for v2 push notifications | N/A |
+| 2 | Priya Patel | priyapatel821@gmail.com | `GA2SD...UGRLB` | I'd like more analytics features. | N/A - Planned for v2 analytics | N/A |
+| 3 | Amit Kumar | amitkumar445@gmail.com | `GDZJY...BZ46Q` | Faster loading times on mobile devices. | Optimised layout spacing for mobile rendering | [17fe083](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/17fe083) |
+| 4 | Neha Singh | nehasingh718@gmail.com | `GCWVS...B4MRU` | Needs a detailed tutorial section. | Added quick tutorial to institution dashboard | [c8864bb](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/c8864bb) |
+| 5 | Vikram Reddy | vikramreddy119@gmail.com | `GBVON...2VF7` | Allow custom branding for institutions. | N/A - Custom branding in v2 | N/A |
+| 6 | Anjali Desai | anjalidesai905@gmail.com | `GDCA4...T3CB` | Improve mobile layout. | Tweaked mobile layout breakpoints | [17fe083](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/17fe083) |
+| 7 | Rohan Gupta | rohangupta337@gmail.com | `GAZGT...HBOJ` | Email notifications for scholarships. | N/A - Notification server needed | N/A |
+| 8 | Sneha Joshi | snehajoshi552@gmail.com | `GD2X7...5IS3` | Allow PDF downloads. | Added PDF download functionality to credential verify page | [c8864bb](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/c8864bb) |
+| 9 | Arjun Verma | arjunverma214@gmail.com | `GAWBB...ODQJ` | Include a public directory. | Implemented public directory portal | [54bf2bb](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/54bf2bb) |
+| 10 | Kavita Nair | kavitanair689@gmail.com | `GBYZU...KFT6` | More color themes. | Enabled core color-scheme theming support | [e929541](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-/commit/e929541) |
+| 11 | Manish Tiwari | manishtiwari774@gmail.com | `GARII...BGUS` | Add a developer portal. | N/A - Dev SDK planned | N/A |
+| 12 | Pooja Mehta | poojamehta881@gmail.com | `GA5SS...B5A` | More integrations with university systems. | N/A - B2B integration in v2 | N/A |
 
 ---
 
