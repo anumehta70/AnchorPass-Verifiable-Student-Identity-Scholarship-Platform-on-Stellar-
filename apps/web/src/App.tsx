@@ -8,6 +8,7 @@ import { InstitutionDashboardPage } from "./pages/InstitutionDashboardPage.tsx";
 import { StudentDashboardPage } from "./pages/StudentDashboardPage.tsx";
 import { VerifyCredentialPage } from "./pages/VerifyCredentialPage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
+import { DirectoryPage } from "./pages/DirectoryPage.tsx";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/students/dashboard" element={<StudentDashboardPage />} />
           <Route path="/verify" element={<VerifyCredentialPage />} />
           <Route path="/verify/:id" element={<VerifyCredentialPage />} />
+          <Route path="/directory" element={<DirectoryPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
