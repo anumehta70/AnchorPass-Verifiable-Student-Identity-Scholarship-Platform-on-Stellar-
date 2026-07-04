@@ -96,4 +96,35 @@ We actively collected user feedback through Google Forms to validate the MVP and
 | `issue_credential(student, title, metadata_hash)` | Institution | Issue a verifiable credential |
 | `verify_credential(credential_id)` | Anyone | Read credential state from chain |
 | `revoke_credential(credential_id)` | Owning institution | Permanently revoke a credential |
---
+
+---
+
+## 💻 Local Setup & Development
+
+To run AnchorPass locally, ensure you have Node.js and npm installed.
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-.git
+   cd AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-
+   ```
+
+2. **Start the API Server (Backend):**
+   ```bash
+   cd apps/api
+   npm install
+   npm run dev
+   ```
+
+3. **Start the Frontend Web App:**
+   Open a new terminal window:
+   ```bash
+   cd apps/web
+   npm install
+   npm run dev
+   ```
+
+*(Ensure you connect the Freighter Wallet browser extension and set it to Stellar Testnet).*
+
+---
+*AnchorPass was built for the Stellar Community Fund. License: MIT.*
