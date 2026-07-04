@@ -18,7 +18,7 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
   const [credentialTitle, setCredentialTitle] = useState(`${scholarship.title} — Certificate`);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<{ id: string; qrCode?: string } | null>(null);
+  const [success, setSuccess] = useState<{ id: string; qrCode?: string; txHash?: string } | null>(null);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -40,9 +40,13 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
         [
           nativeToScVal(institutionWallet, { type: "address" }),
           nativeToScVal(studentWallet, { type: "address" }),
-          nativeToScVal(Number(scholarship.id), { type: "u64" }),
+          nativeToScVal(credentialTitle, { type: "string" }),
           nativeToScVal(ipfsHash, { type: "string" }),
-        ]
+        ],
+        {
+          destination: studentWallet,
+          amount: scholarship.amount, // Pay XLM to student
+        }
       );
 
       // 2. Have the wallet sign it
@@ -64,7 +68,7 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
         ipfsHash,
       });
 
-      setSuccess({ id: credential.id, qrCode: credential.qrCode });
+      setSuccess({ id: credential.id, qrCode: credential.qrCode, txHash });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to issue credential");
     } finally {
@@ -90,7 +94,17 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
 
         {success ? (
           <div className="text-center">
-            <p className="font-body text-sm text-verified">Credential issued successfully.</p>
+            <p className="font-body text-sm text-verified">Credential & XLM issued successfully.</p>
+            {success.txHash && (
+              <a
+                href={`https://stellar.expert/explorer/testnet/tx/${success.txHash}`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 inline-block font-mono text-xs text-institution hover:underline"
+              >
+                View on Stellar Expert Explorer ↗
+              </a>
+            )}
             {success.qrCode && (
               <img src={success.qrCode} alt="Verification QR code" className="mx-auto mt-4 h-40 w-40" />
             )}

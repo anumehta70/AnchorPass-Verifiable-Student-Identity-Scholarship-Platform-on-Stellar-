@@ -1,4 +1,4 @@
-import { rpc, TransactionBuilder, Networks, Contract, xdr } from "@stellar/stellar-sdk";
+import { rpc, TransactionBuilder, Networks, Contract, xdr, Operation, Asset } from "@stellar/stellar-sdk";
 
 const RPC_URL = import.meta.env.VITE_SOROBAN_RPC_URL || "https://soroban-testnet.stellar.org";
 const CONTRACT_ID = import.meta.env.VITE_SOROBAN_CONTRACT_ID;
@@ -8,7 +8,8 @@ export const server = new rpc.Server(RPC_URL);
 export async function prepareContractCall(
   publicKey: string,
   method: string,
-  args: xdr.ScVal[] = []
+  args: xdr.ScVal[] = [],
+  payment?: { destination: string; amount: string }
 ): Promise<string> {
   if (!CONTRACT_ID) {
     throw new Error("Missing VITE_SOROBAN_CONTRACT_ID environment variable. Set it in .env to point to your deployed contract.");
@@ -18,11 +19,23 @@ export async function prepareContractCall(
   const account = await server.getAccount(publicKey);
   const contract = new Contract(CONTRACT_ID);
 
-  // Build the basic transaction
-  let tx = new TransactionBuilder(account, {
+  let builder = new TransactionBuilder(account, {
     fee: "1000",
     networkPassphrase: Networks.TESTNET,
-  })
+  });
+
+  if (payment) {
+    builder = builder.addOperation(
+      Operation.payment({
+        destination: payment.destination,
+        asset: Asset.native(),
+        amount: payment.amount,
+      })
+    );
+  }
+
+  // Build the basic transaction
+  let tx = builder
     .addOperation(contract.call(method, ...args))
     .setTimeout(30)
     .build();
