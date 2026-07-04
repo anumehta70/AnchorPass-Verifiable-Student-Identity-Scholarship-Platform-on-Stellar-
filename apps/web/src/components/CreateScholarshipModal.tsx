@@ -28,9 +28,7 @@ export function CreateScholarshipModal({ institutionWallet, onClose, onCreated }
     setSubmitting(true);
     setError(null);
     try {
-      // 1. Build the Soroban XDR for `create_scholarship`
       const deadlineSecs = Math.floor(new Date(deadline).getTime() / 1000);
-      const amountDrops = Math.floor(parseFloat(amount) * 1e7); // Assuming XLM scaled by 1e7
 
       const unsignedXdr = await prepareContractCall(
         institutionWallet,
