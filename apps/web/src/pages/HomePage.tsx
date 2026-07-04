@@ -6,7 +6,7 @@ export function HomePage() {
 
   return (
     <div>
-      <section className="paper-texture relative overflow-hidden border-b border-ink/10 px-6 py-24">
+      <section className="paper-texture relative overflow-hidden border-b border-ink/10 px-4 py-16 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-seal">
             Built on Stellar · Soroban Smart Contracts
