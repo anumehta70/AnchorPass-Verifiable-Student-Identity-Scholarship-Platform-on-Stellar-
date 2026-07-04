@@ -10,7 +10,7 @@ A production-ready verifiable credentials platform built on the Stellar network.
 - **Video Demo:** [Watch Full Demo on Google Drive](https://drive.google.com/file/d/1x-I8TTi3dKf6cXKC2FrtrB2JUh8Psp1y/view?usp=sharing)
 - **Contract Address (Testnet):** `CABA6ZABNSL3CSMYYO4IJIXTXOMECQKAT2ML5XKNZK32ZFQ4CHFLR4MT`
 - **Google Form Link:** [Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfkmdP00FtplzE-eYJYuhDdPYD95IIKBmnqB5qGsJn_d9EyRg/viewform)
-- **Response Sheet:** [Response Sheet Export](https://docs.google.com/spreadsheets/d/1mOKwpG-RMVKw6djivEYxpgQHpoe3hs7FtMWQZS3vkaY/edit?usp=sharing)
+- **Response Sheet:** [Response Sheet Link](https://docs.google.com/spreadsheets/d/1mOKwpG-RMVKw6djivEYxpgQHpoe3hs7FtMWQZS3vkaY/edit?usp=sharing)
 - **GitHub Repository:** [AnchorPass Source Code](https://github.com/anumehta70/AnchorPass-Verifiable-Student-Identity-Scholarship-Platform-on-Stellar-)
 
 ---
@@ -125,6 +125,3 @@ To run AnchorPass locally, ensure you have Node.js and npm installed.
    ```
 
 *(Ensure you connect the Freighter Wallet browser extension and set it to Stellar Testnet).*
-
----
-*AnchorPass was built for the Stellar Community Fund. License: MIT.*
