@@ -1,0 +1,147 @@
+// AnchorPass database schema
+//
+// Design principle: the chain is the source of truth for anything
+// that affects trust/verification (credential status, claim status,
+// tx hashes). Postgres exists to make that data fast to query, to
+// store off-chain-only content (descriptions, feedback, emails), and
+// to cache IPFS metadata for quick reads without round-tripping IPFS.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  INSTITUTION
+  STUDENT
+  VERIFIER
+}
+
+enum ScholarshipStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  EXPIRED
+}
+
+enum CredentialStatus {
+  VALID
+  REVOKED
+}
+
+model User {
+  id            String   @id @default(cuid())
+  walletAddress String   @unique
+  role          Role
+  name          String?
+  email         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  institution Institution?
+  feedback    Feedback[]
+
+  @@index([role])
+}
+
+model Institution {
+  id             String   @id @default(cuid())
+  walletAddress  String   @unique
+  name           String
+  verified       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  user         User          @relation(fields: [walletAddress], references: [walletAddress])
+  scholarships Scholarship[]
+  credentials  Credential[]
+}
+
+model Scholarship {
+  id                     String            @id @default(cuid())
+  // on-chain identifiers
+  contractScholarshipId  BigInt            @unique
+  transactionHash        String?
+
+  title           String
+  description     String?
+  amount          Decimal           @db.Decimal(20, 7)
+  totalSeats      Int
+  deadline        DateTime
+  eligibility     String?
+  status          ScholarshipStatus @default(DRAFT)
+
+  institutionWallet String
+  institution        Institution @relation(fields: [institutionWallet], references: [walletAddress])
+
+  assignments ScholarshipAssignment[]
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
+
+  @@index([institutionWallet])
+  @@index([status])
+}
+
+model ScholarshipAssignment {
+  id             String   @id @default(cuid())
+  scholarshipId  String
+  scholarship    Scholarship @relation(fields: [scholarshipId], references: [id])
+
+  studentWallet  String
+  claimed        Boolean  @default(false)
+  claimedAt      DateTime?
+  claimTxHash    String?
+  assignedAt     DateTime @default(now())
+
+  @@unique([scholarshipId, studentWallet])
+  @@index([studentWallet])
+}
+
+model Credential {
+  id                    String           @id @default(cuid())
+  // on-chain identifiers
+  contractCredentialId  BigInt           @unique
+  transactionHash       String?
+
+  title          String
+  studentWallet  String
+  ipfsHash       String
+  status         CredentialStatus @default(VALID)
+  issuedAt       DateTime         @default(now())
+  revokedAt      DateTime?
+
+  institutionWallet String
+  institution        Institution @relation(fields: [institutionWallet], references: [walletAddress])
+
+  @@index([studentWallet])
+  @@index([institutionWallet])
+  @@index([status])
+}
+
+model Feedback {
+  id            String   @id @default(cuid())
+  walletAddress String
+  user          User     @relation(fields: [walletAddress], references: [walletAddress])
+  rating        Int      // 1-5
+  message       String?
+  createdAt     DateTime @default(now())
+
+  @@index([walletAddress])
+}
+
+// Lightweight table to satisfy the "10 real users / proof of wallet
+// interaction" submission requirement without re-deriving it from
+// scattered rows every time.
+model UserInteractionProof {
+  id              String   @id @default(cuid())
+  name            String
+  walletAddress   String
+  action          String   // e.g. "Claimed scholarship", "Viewed credential"
+  transactionHash String?
+  screenshotUrl   String?
+  feedback        String?
+  createdAt       DateTime @default(now())
+}
