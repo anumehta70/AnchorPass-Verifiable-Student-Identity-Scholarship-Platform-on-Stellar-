@@ -25,11 +25,13 @@ jobs:
         with:
           workspaces: contracts
 
-      - name: Install System Dependencies
-        run: sudo apt-get update && sudo apt-get install -y libdbus-1-dev pkg-config
-
       - name: Install Stellar CLI
-        run: cargo install --locked stellar-cli
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo stellar/stellar-cli --pattern "*x86_64-unknown-linux-gnu.tar.gz" --dir .
+          tar -xvzf stellar-cli-*.tar.gz
+          find . -name "stellar" -type f -exec sudo mv {} /usr/local/bin/ \;
 
       - name: Build Contract
         run: |
