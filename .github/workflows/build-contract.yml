@@ -27,9 +27,8 @@ jobs:
 
       - name: Install Stellar CLI
         run: |
-          wget https://github.com/stellar/stellar-cli/releases/download/v22.0.0/stellar-cli-22.0.0-x86_64-unknown-linux-gnu.tar.gz
-          tar -xvzf stellar-cli-22.0.0-x86_64-unknown-linux-gnu.tar.gz
-          find . -name "stellar" -type f -exec sudo mv {} /usr/local/bin/ \;
+          curl --proto '=https' --tlsv1.2 -lsSf https://install.stellar.org | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Build Contract
         run: |
