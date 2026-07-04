@@ -19,13 +19,26 @@ export async function prepareContractCall(
   const account = await server.getAccount(publicKey);
   const contract = new Contract(CONTRACT_ID);
 
-  let builder = new TransactionBuilder(account, {
+  // 1. Build the basic transaction with ONLY the Soroban contract call for simulation
+  let simTx = new TransactionBuilder(account, {
     fee: "1000",
+    networkPassphrase: Networks.TESTNET,
+  })
+    .addOperation(contract.call(method, ...args))
+    .setTimeout(30)
+    .build();
+
+  // 2. Simulate and prepare the transaction to fill in the resource footprint and exact fees
+  let preparedTx = (await server.prepareTransaction(simTx)) as any;
+
+  // 3. Rebuild the final transaction including the payment if provided
+  let finalBuilder = new TransactionBuilder(account, {
+    fee: preparedTx.fee,
     networkPassphrase: Networks.TESTNET,
   });
 
   if (payment) {
-    builder = builder.addOperation(
+    finalBuilder.addOperation(
       Operation.payment({
         destination: payment.destination,
         asset: Asset.native(),
@@ -34,16 +47,16 @@ export async function prepareContractCall(
     );
   }
 
-  // Build the basic transaction
-  let tx = builder
-    .addOperation(contract.call(method, ...args))
-    .setTimeout(30)
-    .build();
+  // Add the prepared Soroban operation
+  finalBuilder.addOperation(preparedTx.operations[0]);
+  
+  if (preparedTx.sorobanData) {
+    finalBuilder.setSorobanData(preparedTx.sorobanData);
+  }
 
-  // Simulate and prepare the transaction to fill in the resource footprint and exact fees
-  tx = (await server.prepareTransaction(tx)) as any;
+  let finalTx = finalBuilder.setTimeout(30).build();
 
-  return tx.toXDR();
+  return finalTx.toXDR();
 }
 
 export async function submitContractTx(signedXdr: string): Promise<string> {
