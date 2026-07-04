@@ -1,0 +1,166 @@
+import { useState, type FormEvent } from "react";
+import { useWallet } from "../hooks/useWallet.tsx";
+import { api } from "../lib/api.ts";
+import { ErrorAlert } from "./ErrorAlert.tsx";
+import type { ReactNode } from "react";
+
+interface Props {
+  institutionWallet: string;
+  onClose: () => void;
+  onCreated: () => void;
+}
+
+export function CreateScholarshipModal({ institutionWallet, onClose, onCreated }: Props) {
+  const { signTransaction: _signTransaction } = useWallet();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+  const [totalSeats, setTotalSeats] = useState("5");
+  const [deadline, setDeadline] = useState("");
+  const [eligibility, setEligibility] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    try {
+      // 1. Build + simulate `create_scholarship` against the deployed
+      //    Soroban contract, get back an unsigned XDR transaction.
+      //    2. Have the wallet sign it, then submit to Soroban RPC.
+      // This requires @stellar/stellar-sdk wired to the live contract ID
+      // (see contracts/anchorpass/BUILD.md). Signing hook is already wired:
+      //   const signedXdr = await signTransaction(unsignedXdr);
+      // For now we simulate a resulting on-chain scholarship id + tx hash
+      // so the rest of the flow (Postgres record, dashboard refresh) is
+      // fully exercised end-to-end without a live contract.
+      const mockContractScholarshipId = String(Date.now());
+      const mockTxHash = `pending-${Date.now()}`;
+
+      await api.createScholarship({
+        contractScholarshipId: mockContractScholarshipId,
+        transactionHash: mockTxHash,
+        title,
+        description: description || undefined,
+        amount,
+        totalSeats: Number(totalSeats),
+        deadline: new Date(deadline).toISOString(),
+        eligibility: eligibility || undefined,
+        institutionWallet,
+      });
+
+      onCreated();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create scholarship");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4">
+      <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl bg-white p-6 shadow-2xl">
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="font-display text-xl font-semibold text-ink">Create Scholarship</h2>
+          <button onClick={onClose} aria-label="Close" className="text-ink/40 hover:text-ink">
+            ✕
+          </button>
+        </div>
+
+        {error && (
+          <div className="mb-4">
+            <ErrorAlert message={error} />
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Field label="Scholarship Name">
+            <input
+              required
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="input"
+            />
+          </Field>
+          <Field label="Description">
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="input h-20"
+            />
+          </Field>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Amount (XLM)">
+              <input
+                required
+                type="number"
+                min="0"
+                step="0.01"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="input"
+              />
+            </Field>
+            <Field label="Total Seats">
+              <input
+                required
+                type="number"
+                min="1"
+                value={totalSeats}
+                onChange={(e) => setTotalSeats(e.target.value)}
+                className="input"
+              />
+            </Field>
+          </div>
+          <Field label="Deadline">
+            <input
+              required
+              type="date"
+              value={deadline}
+              onChange={(e) => setDeadline(e.target.value)}
+              className="input"
+            />
+          </Field>
+          <Field label="Eligibility">
+            <input
+              value={eligibility}
+              onChange={(e) => setEligibility(e.target.value)}
+              className="input"
+              placeholder="e.g. Full-time undergraduate, GPA 3.5+"
+            />
+          </Field>
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full rounded-lg bg-institution py-2.5 font-body text-sm font-semibold text-paper hover:bg-ink disabled:opacity-60"
+          >
+            {submitting ? "Creating on-chain…" : "Create Scholarship"}
+          </button>
+        </form>
+      </div>
+
+      <style>{`
+        .input {
+          width: 100%;
+          border: 1px solid rgba(11,14,20,0.15);
+          border-radius: 0.5rem;
+          padding: 0.6rem 0.75rem;
+          font-family: Inter, sans-serif;
+          font-size: 0.875rem;
+        }
+        .input:focus { outline: 2px solid #C9A227; border-color: transparent; }
+      `}</style>
+    </div>
+  );
+}
+
+function Field({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-1 block font-body text-sm font-medium text-ink/70">{label}</span>
+      {children}
+    </label>
+  );
+}

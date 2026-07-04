@@ -1,0 +1,130 @@
+import { useState, type FormEvent } from "react";
+import { api, type Scholarship } from "../lib/api.ts";
+import { ErrorAlert } from "./ErrorAlert.tsx";
+
+interface Props {
+  scholarship: Scholarship;
+  institutionWallet: string;
+  onClose: () => void;
+}
+
+export function IssueCredentialModal({ scholarship, institutionWallet, onClose }: Props) {
+  const claimedStudents = scholarship.assignments.filter((a) => a.claimed);
+  const [studentWallet, setStudentWallet] = useState(claimedStudents[0]?.studentWallet ?? "");
+  const [credentialTitle, setCredentialTitle] = useState(`${scholarship.title} — Certificate`);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<{ id: string; qrCode?: string } | null>(null);
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    try {
+      const { ipfsHash } = await api.prepareCredential({
+        studentWallet,
+        institutionWallet,
+        institutionName: "Your Institution",
+        credentialTitle,
+        scholarshipId: scholarship.id,
+      });
+
+      // On-chain `issue_credential` call would happen here via Freighter,
+      // signing with the institution wallet. Using a placeholder tx/id
+      // until wired to a live deployed contract (see BUILD.md).
+      const mockContractCredentialId = String(Date.now());
+      const mockTxHash = `pending-${Date.now()}`;
+
+      const credential = await api.finalizeCredential({
+        contractCredentialId: mockContractCredentialId,
+        transactionHash: mockTxHash,
+        title: credentialTitle,
+        studentWallet,
+        institutionWallet,
+        ipfsHash,
+      });
+
+      setSuccess({ id: credential.id, qrCode: credential.qrCode });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to issue credential");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4">
+      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-2xl">
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="font-display text-xl font-semibold text-ink">Issue Credential</h2>
+          <button onClick={onClose} aria-label="Close" className="text-ink/40 hover:text-ink">
+            ✕
+          </button>
+        </div>
+
+        {error && (
+          <div className="mb-4">
+            <ErrorAlert message={error} />
+          </div>
+        )}
+
+        {success ? (
+          <div className="text-center">
+            <p className="font-body text-sm text-verified">Credential issued successfully.</p>
+            {success.qrCode && (
+              <img src={success.qrCode} alt="Verification QR code" className="mx-auto mt-4 h-40 w-40" />
+            )}
+            <button
+              onClick={onClose}
+              className="mt-5 w-full rounded-lg bg-institution py-2.5 font-body text-sm font-semibold text-paper hover:bg-ink"
+            >
+              Done
+            </button>
+          </div>
+        ) : claimedStudents.length === 0 ? (
+          <p className="font-body text-sm text-ink/60">
+            No students have claimed this scholarship yet. Credentials can only be issued to
+            students who have completed a claim.
+          </p>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <label className="block">
+              <span className="mb-1 block font-body text-sm font-medium text-ink/70">
+                Student
+              </span>
+              <select
+                value={studentWallet}
+                onChange={(e) => setStudentWallet(e.target.value)}
+                className="w-full rounded-lg border border-ink/15 px-3 py-2 font-mono text-xs"
+              >
+                {claimedStudents.map((s) => (
+                  <option key={s.studentWallet} value={s.studentWallet}>
+                    {s.studentWallet}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="block">
+              <span className="mb-1 block font-body text-sm font-medium text-ink/70">
+                Credential Title
+              </span>
+              <input
+                value={credentialTitle}
+                onChange={(e) => setCredentialTitle(e.target.value)}
+                className="w-full rounded-lg border border-ink/15 px-3 py-2 font-body text-sm"
+                required
+              />
+            </label>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full rounded-lg bg-institution py-2.5 font-body text-sm font-semibold text-paper hover:bg-ink disabled:opacity-60"
+            >
+              {submitting ? "Issuing…" : "Issue Credential"}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
