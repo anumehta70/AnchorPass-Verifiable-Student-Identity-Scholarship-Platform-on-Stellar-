@@ -1,0 +1,27 @@
+# Node
+node_modules/
+dist/
+.next/
+.cache/
+*.tsbuildinfo
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Rust
+target/
+Cargo.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Prisma
+apps/api/prisma/migrations/**/*.sql
