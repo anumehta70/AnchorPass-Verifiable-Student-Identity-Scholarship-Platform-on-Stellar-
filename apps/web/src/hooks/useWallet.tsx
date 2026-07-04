@@ -12,6 +12,7 @@ import {
   FreighterModule,
   type ISupportedWallet,
 } from "@creit.tech/stellar-wallets-kit";
+import { api } from "../lib/api";
 
 export type UserRole = "INSTITUTION" | "STUDENT" | "VERIFIER" | null;
 
@@ -51,6 +52,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         const parsed = JSON.parse(saved) as { address: string; role: UserRole };
         setAddress(parsed.address);
         setRoleState(parsed.role);
+        
+        if (parsed.address && parsed.role) {
+          api.upsertUser({ walletAddress: parsed.address, role: parsed.role }).catch(err => console.error("Failed to sync on load", err));
+        }
       } catch {
         localStorage.removeItem(STORAGE_KEY);
       }
@@ -73,6 +78,15 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         onWalletSelected: async (option: ISupportedWallet) => {
           kit.setWallet(option.id);
           const { address: pubKey } = await kit.getAddress();
+          
+          if (role) {
+            try {
+              await api.upsertUser({ walletAddress: pubKey, role });
+            } catch (err) {
+              console.error("Failed to sync user with backend:", err);
+            }
+          }
+          
           setAddress(pubKey);
           persist({ address: pubKey, role });
         },
@@ -94,6 +108,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     (nextRole: UserRole) => {
       setRoleState(nextRole);
       persist({ address, role: nextRole });
+      
+      if (address && nextRole) {
+        api.upsertUser({ walletAddress: address, role: nextRole }).catch(err => console.error("Failed to sync on role change", err));
+      }
     },
     [address, persist]
   );
