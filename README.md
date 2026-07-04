@@ -337,3 +337,21 @@ MIT
 **Demo Video:** (Pending)
 **Contract Deployment Address:** CABA6ZABNSL3CSMYYO4IJIXTXOMECQKAT2ML5XKNZK32ZFQ4CHFLR4MT
 
+
+
+## Automated Credential Issuance
+
+| # | Student Wallet | Transaction Hash | Explorer Link |
+|---|----------------|------------------|---------------|
+| 1 | `GCDAVZHHQGDDBQIAWYM3ZWZ3NEY34GBIDXQVA4F24SO7FUGOMJFOX5H3` | `95b38843...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/95b38843d1b61534c49d88a06e5f1877d270f12022565b2d86f6157a00ff0e81) |
+| 2 | `GA2SDBMFAQW4JLCXJU2QU2P2YYQMTMNFCPMJ6OL6GTOKOOYC6ICUGRLB` | `a064f737...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/a064f737ee6d87f67fd622b4fe6a4cd4195265a83849cb09268907d1ee5905dd) |
+| 3 | `GDZJYT7KL4BLZ75ONELN5KQRHNBMCI2NSF7DR2ALHT2BWG2VM2WBZ46Q` | `9d1fb8e1...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/9d1fb8e185f4ca4045e2cdf2cc05e3a334e6065bc37eadcea8627ca9c7eb9fd0) |
+| 4 | `GCWVS2S2OU2VTXRWK2ICSDPDOHQRCABGXVBLOKSKP53BB5LSC3YB4MRU` | `542182fc...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/542182fcd75b98e64c244c336b0363815d23cb9157a8b21b3d1c51696554f4b1) |
+| 5 | `GBVONW2MV6VWT22JLEQLVSTMYJTZPRZGXYYM74P5J67E6SJXJITU2VF7` | `3ee9327f...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/3ee9327f9085bec6275296595ddfdee3a7498a40a1b99e7050159d9bc8a3acd9) |
+| 6 | `GDCA4TRX4ZLDN2PZUVLMN7ZIYW57Q2F5O3TSKZBFCEV2HBRMLHHTT3CB` | `b3477696...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/b347769672ced48b35f166d45787f407214c475704dc281bd6d9f93cf5a7f842) |
+| 7 | `GAZGTGZBOWC774WTPHFAC37BY2YOLXM747ID5N43BHPHRROP7HTWHBOJ` | `aae796b4...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/aae796b4a53ef8385975fc6a829ceef021798f645f230ac46a6fa016cc25e42e) |
+| 8 | `GD2X7FGKQXYNROX3HBYKGXMOK6IEPEHRSFNWKWOZOGEAPRSCINHX5IS3` | `13e84a14...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/13e84a14b2e9e404cfc639ee397362ff2f56f1ee13dfcd2fa86b0591fc50053b) |
+| 9 | `GAWBBCB7ACOYV5U45LHDDL5FYJKPRQQ6DHORJJRDBBYCOLNEWQFSODQJ` | `f10992b0...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/f10992b0944448d1755faad0fbf9a0bcb978786c7f40bfbd325de3dd895507e7) |
+| 10 | `GBYZU5PVYTSLBDEJ6LWYDZFK5XN7VWEHDJI2SFNEXHUIO6ITNPSVKFT6` | `ec0008c4...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/ec0008c4eb30a005505abe552c29f0caddcc66bc31bb960f777f99e2560e98d4) |
+| 11 | `GARII7MALUOOVLZN7BUBWFLALCCFWBDK66KDCCVVA5HU6I7K2Q7TBGUS` | `2ffe3565...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/2ffe356545d8866401a55f32c09ad33c47dee117b5bb14bd80f9271aa676c3ca) |
+| 12 | `GA5SSRO6GKANJWSTTQDFPWGBDANFQATE2QX2PYFSFJOIXEL7IJ4YEB5A` | `74ecb292...` | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/74ecb2920bb84c8a5a427ecad87afeac665ddf90ce129efe6fc5382267764872) |
