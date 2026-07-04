@@ -352,3 +352,12 @@ impl AnchorPassContract {
 }
 
 mod test;
+
+// Force new WASM hash for Protocol 22 deploy
+
+
+#[contractimpl] 
+impl AnchorPassContract {
+  pub fn ping(env: Env) -> u32 { 1 }
+}
+
