@@ -3,7 +3,7 @@ import { useWallet } from "../hooks/useWallet.tsx";
 import { api, type Scholarship } from "../lib/api.ts";
 import { ErrorAlert } from "./ErrorAlert.tsx";
 import { nativeToScVal } from "@stellar/stellar-sdk";
-import { prepareContractCall, preparePayment, submitContractTx } from "../lib/soroban";
+import { prepareContractCall, submitContractTx } from "../lib/soroban";
 
 interface Props {
   scholarship: Scholarship;
@@ -18,14 +18,13 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
   const [credentialTitle, setCredentialTitle] = useState(`${scholarship.title} — Certificate`);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<{ id: string; qrCode?: string; txHash?: string; paymentTxHash?: string } | null>(null);
+  const [success, setSuccess] = useState<{ id: string; qrCode?: string; txHash?: string } | null>(null);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
     try {
-      // Step 0: Prepare IPFS metadata
       const { ipfsHash } = await api.prepareCredential({
         studentWallet,
         institutionWallet,
@@ -34,7 +33,7 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
         scholarshipId: scholarship.id,
       });
 
-      // Step 1: Soroban contract call — issue_credential
+      // Build + simulate the Soroban contract call
       const unsignedXdr = await prepareContractCall(
         institutionWallet,
         "issue_credential",
@@ -46,27 +45,15 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
         ],
       );
 
+      // Sign with Freighter
       const signedXdr = await _signTransaction(unsignedXdr);
+
+      // Submit to Stellar network
       const txHash = await submitContractTx(signedXdr);
 
-      // Step 2: Classic XLM payment to the student (separate transaction)
-      let paymentTxHash: string | undefined;
-      const xlmAmount = scholarship.amount;
-      if (xlmAmount && Number(xlmAmount) > 0) {
-        try {
-          const paymentXdr = await preparePayment(institutionWallet, studentWallet, xlmAmount);
-          const signedPaymentXdr = await _signTransaction(paymentXdr);
-          paymentTxHash = await submitContractTx(signedPaymentXdr);
-        } catch (payErr) {
-          // Payment failed but credential was already issued on-chain
-          console.warn("XLM payment failed (credential still issued):", payErr);
-        }
-      }
-
-      // Step 3: Record in database
-      const mockContractCredentialId = String(Date.now());
+      // Save to database
       const credential = await api.finalizeCredential({
-        contractCredentialId: mockContractCredentialId,
+        contractCredentialId: String(Date.now()),
         transactionHash: txHash,
         title: credentialTitle,
         studentWallet,
@@ -74,7 +61,7 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
         ipfsHash,
       });
 
-      setSuccess({ id: credential.id, qrCode: credential.qrCode, txHash, paymentTxHash });
+      setSuccess({ id: credential.id, qrCode: credential.qrCode, txHash });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to issue credential");
     } finally {
@@ -100,7 +87,7 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
 
         {success ? (
           <div className="text-center">
-            <p className="font-body text-sm text-verified">Credential issued on-chain successfully!</p>
+            <p className="font-body text-sm text-verified">✅ Credential issued on-chain successfully!</p>
             {success.txHash && (
               <a
                 href={`https://stellar.expert/explorer/testnet/tx/${success.txHash}`}
@@ -108,21 +95,8 @@ export function IssueCredentialModal({ scholarship, institutionWallet, onClose }
                 rel="noreferrer"
                 className="mt-2 inline-block font-mono text-xs text-institution hover:underline"
               >
-                🔗 Credential Tx on Stellar Expert ↗
+                🔗 View Transaction on Stellar Expert ↗
               </a>
-            )}
-            {success.paymentTxHash && (
-              <>
-                <br />
-                <a
-                  href={`https://stellar.expert/explorer/testnet/tx/${success.paymentTxHash}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-1 inline-block font-mono text-xs text-verified hover:underline"
-                >
-                  💰 XLM Payment Tx on Stellar Expert ↗
-                </a>
-              </>
             )}
             {success.qrCode && (
               <img src={success.qrCode} alt="Verification QR code" className="mx-auto mt-4 h-40 w-40" />
